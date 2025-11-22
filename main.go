@@ -4,11 +4,14 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/nathchristine/PBKK_FP/controllers"
 	"github.com/nathchristine/PBKK_FP/initializers"
+	"github.com/nathchristine/PBKK_FP/models"
 )
 
 func init() {
 	initializers.LoadEnvVariables()
 	initializers.ConnectToDB()
+
+	initializers.DB.AutoMigrate(&models.User{})
 }
 func main() {
 	router := gin.Default()
@@ -24,6 +27,9 @@ func main() {
 	router.GET("/transactions", controllers.TransactionIndex)
 	router.GET("/transactions/:id", controllers.TransactionShow)
 	router.DELETE("/transactions/:id", controllers.TransactionDelete)
-  
-	router.Run() // listens on 0.0.0.0:8080 by default
+
+	router.POST("/signup", controllers.Signup)
+	router.POST("/login", controllers.Login)
+
+	router.Run(":3000")
 }
