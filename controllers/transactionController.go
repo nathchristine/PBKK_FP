@@ -6,6 +6,7 @@ import (
 	"github.com/nathchristine/PBKK_FP/models"
 )
 
+<<<<<<< HEAD
 func TransactionCreate(c *gin.Context) {
 	var body struct {
 		BookID     *uint  `json:"book_id"`
@@ -15,11 +16,26 @@ func TransactionCreate(c *gin.Context) {
 		Status     string `json:"status"`
 	}
 
+=======
+func TransactionCreate (c *gin.Context) {
+	// Get data off req body
+	var body struct {
+		BookID     *uint	`json:"book_id"`
+		UserID     *uint	`json:"user_id"`
+		BorrowDate string	`json:"borrow_date"`
+		ReturnDate string	`json:"return_date"`
+		Status     string	`json:"status"`
+	}
+>>>>>>> 8952ca04f1bcdeee897cbb3f4dc61fd815186c8b
 	if err := c.ShouldBindJSON(&body); err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
 
+<<<<<<< HEAD
+=======
+	// Create a transaction
+>>>>>>> 8952ca04f1bcdeee897cbb3f4dc61fd815186c8b
 	transaction := models.Transaction{
 		BookID:     *body.BookID,
 		UserID:     *body.UserID,
@@ -28,18 +44,28 @@ func TransactionCreate(c *gin.Context) {
 		Status:     body.Status,
 	}
 
+<<<<<<< HEAD
 	result := initializers.DB.Create(&transaction)
+=======
+	result := initializers.DB.Create(&transaction) 
+
+>>>>>>> 8952ca04f1bcdeee897cbb3f4dc61fd815186c8b
 	if result.Error != nil {
 		c.Status(400)
 		return
 	}
 
+<<<<<<< HEAD
+=======
+	// Return it
+>>>>>>> 8952ca04f1bcdeee897cbb3f4dc61fd815186c8b
 	c.JSON(200, gin.H{
 		"transaction": transaction,
 	})
 }
 
 func TransactionIndex(c *gin.Context) {
+<<<<<<< HEAD
 	var transactions []models.Transaction
 	initializers.DB.Preload("Book").Find(&transactions)
 
@@ -70,12 +96,35 @@ func TransactionShow(c *gin.Context) {
 	var transaction models.Transaction
 	initializers.DB.Preload("Book").First(&transaction, id)
 
+=======
+	// Get the transactions
+	var transaction []models.Transaction
+	initializers.DB.Preload("Book").Find(&transaction)
+
+	// Respond with them
+	c.JSON(200, gin.H{
+		"transactions": transaction,
+	})
+
+}
+
+func TransactionShow(c *gin.Context) {
+	// Get id off url
+	id := c.Param("id")
+
+	// Get the transaction
+	var transaction models.Transaction
+	initializers.DB.Preload("Book").First(&transaction, id)
+
+	// Respond with it
+>>>>>>> 8952ca04f1bcdeee897cbb3f4dc61fd815186c8b
 	c.JSON(200, gin.H{
 		"transaction": transaction,
 	})
 }
 
 func TransactionUpdate(c *gin.Context) {
+<<<<<<< HEAD
 	id := c.Param("id")
 
 	var body struct {
@@ -86,14 +135,35 @@ func TransactionUpdate(c *gin.Context) {
 		Status     string `json:"status"`
 	}
 
+=======
+	// Get the id off the url
+	id := c.Param("id")
+
+	// Get the data off req body
+	var body struct {
+		BookID     uint	`json:"book_id"`
+		UserID     uint	`json:"user_id"`
+		BorrowDate string	`json:"borrow_date"`
+		ReturnDate string	`json:"return_date"`
+		Status     string	`json:"status"`
+	}
+>>>>>>> 8952ca04f1bcdeee897cbb3f4dc61fd815186c8b
 	if err := c.ShouldBindJSON(&body); err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
 
+<<<<<<< HEAD
 	var transaction models.Transaction
 	initializers.DB.First(&transaction, id)
 
+=======
+	// Find the transaction were updating
+	var transaction models.Transaction
+	initializers.DB.First(&transaction, id)
+
+	// Update it
+>>>>>>> 8952ca04f1bcdeee897cbb3f4dc61fd815186c8b
 	initializers.DB.Model(&transaction).Updates(models.Transaction{
 		BookID:     body.BookID,
 		UserID:     body.UserID,
@@ -101,6 +171,7 @@ func TransactionUpdate(c *gin.Context) {
 		ReturnDate: body.ReturnDate,
 		Status:     body.Status,
 	})
+<<<<<<< HEAD
 
 	if body.Status == "returned" {
 		var book models.Book
@@ -176,3 +247,22 @@ func TransactionMine(c *gin.Context) {
 		"transactions": transactions,
 	})
 }
+=======
+	
+	// Respond with it
+	c.JSON(200, gin.H{
+		"transaction": transaction,
+	})	
+}
+
+func TransactionDelete(c *gin.Context) {
+	// Get the id off the url
+	id := c.Param("id")
+
+	// Delete the transaction
+	initializers.DB.Delete(&models.Transaction{}, id)
+
+	// Respond
+	c.Status(200)
+}
+>>>>>>> 8952ca04f1bcdeee897cbb3f4dc61fd815186c8b
