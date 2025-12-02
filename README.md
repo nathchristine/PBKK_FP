@@ -11,7 +11,6 @@
   <img src="https://github.com/user-attachments/assets/39eed902-7dbc-4114-9799-f50c22ccec40" 
        alt="Badge_ITS" 
        width="50%" 
-       height="380" />
 </p>
   
 A website created by <a href="https://github.com/bellaacp">Bella Angeline C.P </a> and <a href="https://github.com/nathchristine">Nathaniel Christine M.S</a>
